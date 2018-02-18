@@ -1,26 +1,32 @@
 defmodule ExOpenRTB.Constants.Macro do
   defmacro constant(name, keywords, at \\ 1) do
-    Enum.with_index(keywords, at) |> Enum.map(fn {int, kw} ->
+    Enum.with_index(keywords, at)
+    |> Enum.map(fn {kw, int} ->
       quote do
         def unquote(name)(unquote(int)) do
-          unquote kw
+          unquote(kw)
         end
+
         def unquote(name)(nil) do
         end
+
         def unquote(name)(unquote(kw)) do
-          unquote int
+          unquote(int)
         end
       end
     end)
   end
 
   defmacro abbreviation(name, keywords) do
-    keywords |> Enum.map(fn {k, v} ->
-      k = Atom.to_string k
+    keywords
+    |> Enum.map(fn {k, v} ->
+      k = Atom.to_string(k)
+
       quote do
         def unquote(name)(unquote(k)) do
           unquote(v)
         end
+
         def unquote(name)(unquote(v)) do
           unquote(k)
         end
@@ -32,20 +38,132 @@ end
 defmodule ExOpenRTB.Constants do
   import ExOpenRTB.Constants.Macro
 
-  constant :yesno, [
-    false,
-    true,
-  ], 0
+  constant(
+    :test,
+    [
+      :live,
+      :test
+    ],
+    0
+  )
 
-  # 3.2.2 Object: Source
-  constant :fd, [
-    :exchange,
-    :upstream_source,
-  ], 0
+  constant(:auctiontype, [
+    :first_price,
+    :second_price
+  ])
+
+  constant(
+    :yesno,
+    [
+      false,
+      true
+    ],
+    0
+  )
+
+  constant(
+    :instl,
+    [
+      false,
+      true
+    ],
+    0
+  )
+
+  constant(
+    :clickbrowser,
+    [
+      :embedded,
+      :native
+    ],
+    0
+  )
+
+  constant(
+    :secure,
+    [
+      :non_secure,
+      :secure
+    ],
+    0
+  )
+
+  constant(
+    :fd,
+    [
+      :exchange,
+      :upstream_source
+    ],
+    0
+  )
+
+  constant(
+    :vcm,
+    [
+      :concurrent,
+      :end_card
+    ],
+    0
+  )
+
+  constant(
+    :paid,
+    [
+      :free_app,
+      :paid_app
+    ],
+    0
+  )
+
+  constant(
+    :livestream,
+    [
+      :not_live,
+      :live
+    ],
+    0
+  )
+
+  constant(
+    :sourcerelationship,
+    [
+      :indirect,
+      :direct
+    ],
+    0
+  )
+
+  constant(
+    :dnt,
+    [
+      :tracking_unrestricted,
+      :do_not_track
+    ],
+    0
+  )
+
+  constant(
+    :lmt,
+    [
+      :tracking_unrestricted,
+      :tracking_limited
+    ],
+    0
+  )
+
+  constant(
+    :group,
+    [
+      :individually,
+      :as_group
+    ],
+    0
+  )
 
   # 5.1 Content Categories
-  abbreviation :content_category, [
-    "IAB1": "Arts & Entertainment",
+  abbreviation(
+    :content_category,
+    IAB1: "Arts & Entertainment",
     "IAB1-1": "Books & Literature",
     "IAB1-2": "Celebrity Fan/Gossip",
     "IAB1-3": "Fine Art",
@@ -53,7 +171,7 @@ defmodule ExOpenRTB.Constants do
     "IAB1-5": "Movies",
     "IAB1-6": "Music",
     "IAB1-7": "Television",
-    "IAB2": "Automotive",
+    IAB2: "Automotive",
     "IAB2-1": "Auto Parts",
     "IAB2-2": "Auto Repair",
     "IAB2-3": "Buying/Selling Cars",
@@ -77,7 +195,7 @@ defmodule ExOpenRTB.Constants do
     "IAB2-21": "Trucks & Accessories",
     "IAB2-22": "Vintage Cars",
     "IAB2-23": "Wagon",
-    "IAB3": "Business",
+    IAB3: "Business",
     "IAB3-1": "Advertising",
     "IAB3-2": "Agriculture",
     "IAB3-3": "Biotech/Biomedical",
@@ -90,7 +208,7 @@ defmodule ExOpenRTB.Constants do
     "IAB3-10": "Logistics",
     "IAB3-11": "Marketing",
     "IAB3-12": "Metals",
-    "IAB4": "Careers",
+    IAB4: "Careers",
     "IAB4-1": "Career Planning",
     "IAB4-2": "College",
     "IAB4-3": "Financial Aid",
@@ -102,7 +220,7 @@ defmodule ExOpenRTB.Constants do
     "IAB4-9": "Telecommuting",
     "IAB4-10": "U.S. Military",
     "IAB4-11": "Career Advice",
-    "IAB5": "Education",
+    IAB5: "Education",
     "IAB5-1": "7-12 Education",
     "IAB5-2": "Adult Education",
     "IAB5-3": "Art History",
@@ -118,7 +236,7 @@ defmodule ExOpenRTB.Constants do
     "IAB5-13": "Private School",
     "IAB5-14": "Special Education",
     "IAB5-15": "Studying Business",
-    "IAB6": "Family & Parenting",
+    IAB6: "Family & Parenting",
     "IAB6-1": "Adoption",
     "IAB6-2": "Babies & Toddlers",
     "IAB6-3": "Daycare/Pre School",
@@ -128,7 +246,7 @@ defmodule ExOpenRTB.Constants do
     "IAB6-7": "Pregnancy",
     "IAB6-8": "Special Needs Kids",
     "IAB6-9": "Eldercare",
-    "IAB7": "Health & Fitness",
+    IAB7: "Health & Fitness",
     "IAB7-1": "Exercise",
     "IAB7-2": "ADD",
     "IAB7-3": "AIDS/HIV",
@@ -174,7 +292,7 @@ defmodule ExOpenRTB.Constants do
     "IAB7-43": "Thyroid Disease",
     "IAB7-44": "Weight Loss",
     "IAB7-45": "Women's Health",
-    "IAB8": "Food & Drink",
+    IAB8: "Food & Drink",
     "IAB8-1": "American Cuisine",
     "IAB8-2": "Barbecues & Grilling",
     "IAB8-3": "Cajun/Creole",
@@ -193,7 +311,7 @@ defmodule ExOpenRTB.Constants do
     "IAB8-16": "Vegan",
     "IAB8-17": "Vegetarian",
     "IAB8-18": "Wine",
-    "IAB9": "Hobbies & Interests",
+    IAB9: "Hobbies & Interests",
     "IAB9-1": "Art/Technology",
     "IAB9-2": "Arts & Crafts",
     "IAB9-3": "Beadwork",
@@ -225,7 +343,7 @@ defmodule ExOpenRTB.Constants do
     "IAB9-29": "Stamps & Coins",
     "IAB9-30": "Video & Computer Games",
     "IAB9-31": "Woodworking",
-    "IAB10": "Home & Garden",
+    IAB10: "Home & Garden",
     "IAB10-1": "Appliances",
     "IAB10-2": "Entertaining",
     "IAB10-3": "Environmental Safety",
@@ -235,13 +353,13 @@ defmodule ExOpenRTB.Constants do
     "IAB10-7": "Interior Decorating",
     "IAB10-8": "Landscaping",
     "IAB10-9": "Remodeling & Construction",
-    "IAB11": "Law, Government, & Politics",
+    IAB11: "Law, Government, & Politics",
     "IAB11-1": "Immigration",
     "IAB11-2": "Legal Issues",
     "IAB11-3": "U.S. Government Resources",
     "IAB11-4": "Politics",
     "IAB11-5": "Commentary",
-    "IAB12": "News",
+    IAB12: "News",
     "IAB12-1": "International News",
     "IAB12-2": "National News",
     "IAB12-3": "Local News IAB13 Personal Finance",
@@ -257,7 +375,7 @@ defmodule ExOpenRTB.Constants do
     "IAB13-10": "Retirement Planning",
     "IAB13-11": "Stocks",
     "IAB13-12": "Tax Planning",
-    "IAB14": "Society",
+    IAB14: "Society",
     "IAB14-1": "Dating",
     "IAB14-2": "Divorce Support",
     "IAB14-3": "Gay Life",
@@ -266,7 +384,7 @@ defmodule ExOpenRTB.Constants do
     "IAB14-6": "Teens",
     "IAB14-7": "Weddings",
     "IAB14-8": "Ethnic Specific",
-    "IAB15": "Science",
+    IAB15: "Science",
     "IAB15-1": "Astrology",
     "IAB15-2": "Biology",
     "IAB15-3": "Chemistry",
@@ -277,7 +395,7 @@ defmodule ExOpenRTB.Constants do
     "IAB15-8": "Geography",
     "IAB15-9": "Botany",
     "IAB15-10": "Weather",
-    "IAB16": "Pets",
+    IAB16: "Pets",
     "IAB16-1": "Aquariums",
     "IAB16-2": "Birds",
     "IAB16-3": "Cats",
@@ -285,7 +403,7 @@ defmodule ExOpenRTB.Constants do
     "IAB16-5": "Large Animals",
     "IAB16-6": "Reptiles",
     "IAB16-7": "Veterinary Medicine",
-    "IAB17": "Sports",
+    IAB17: "Sports",
     "IAB17-1": "Auto Racing",
     "IAB17-2": "Baseball",
     "IAB17-3": "Bicycling",
@@ -330,14 +448,14 @@ defmodule ExOpenRTB.Constants do
     "IAB17-42": "Walking",
     "IAB17-43": "Waterski/Wakeboard",
     "IAB17-44": "World Soccer",
-    "IAB18": "Style & Fashion",
+    IAB18: "Style & Fashion",
     "IAB18-1": "Beauty",
     "IAB18-2": "Body Art",
     "IAB18-3": "Fashion",
     "IAB18-4": "Jewelry",
     "IAB18-5": "Clothing",
     "IAB18-6": "Accessories",
-    "IAB19": "Technology & Computing",
+    IAB19: "Technology & Computing",
     "IAB19-1": "3-D Graphics",
     "IAB19-2": "Animation",
     "IAB19-3": "Antivirus Software",
@@ -374,7 +492,7 @@ defmodule ExOpenRTB.Constants do
     "IAB19-34": "Web Design/HTML",
     "IAB19-35": "Web Search",
     "IAB19-36": "Windows",
-    "IAB20": "Travel",
+    IAB20: "Travel",
     "IAB20-1": "Adventure Travel",
     "IAB20-2": "Africa",
     "IAB20-3": "Air Travel",
@@ -402,16 +520,16 @@ defmodule ExOpenRTB.Constants do
     "IAB20-25": "Theme Parks",
     "IAB20-26": "Traveling with Kids",
     "IAB20-27": "United Kingdom",
-    "IAB21": "Real Estate",
+    IAB21: "Real Estate",
     "IAB21-1": "Apartments",
     "IAB21-2": "Architects",
     "IAB21-3": "Buying/Selling Homes",
-    "IAB22": "Shopping",
+    IAB22: "Shopping",
     "IAB22-1": "Contests & Freebies",
     "IAB22-2": "Couponing",
     "IAB22-3": "Comparison",
     "IAB22-4": "Engines",
-    "IAB23": "Religion & Spirituality",
+    IAB23: "Religion & Spirituality",
     "IAB23-1": "Alternative Religions",
     "IAB23-2": "Atheism/Agnosticism",
     "IAB23-3": "Buddhism",
@@ -422,8 +540,8 @@ defmodule ExOpenRTB.Constants do
     "IAB23-8": "Judaism",
     "IAB23-9": "Latter-Day Saints",
     "IAB23-10": "Pagan/Wiccan",
-    "IAB24": "Uncategorized",
-    "IAB25": "Non-Standard Content",
+    IAB24: "Uncategorized",
+    IAB25: "Non-Standard Content",
     "IAB25-1": "Unmoderated UGC",
     "IAB25-2": "Extreme Graphic/Explicit Violence",
     "IAB25-3": "Pornography",
@@ -431,26 +549,27 @@ defmodule ExOpenRTB.Constants do
     "IAB25-5": "Hate Content",
     "IAB25-6": "Under Construction",
     "IAB25-7": "Incentivized",
-    "IAB26": "Illegal Content",
+    IAB26: "Illegal Content",
     "IAB26-1": "Illegal Content",
     "IAB26-2": "Warez",
     "IAB26-3": "Spyware/Malware",
-    "IAB26-4": "Copyright Infringement",
-  ]
+    "IAB26-4": "Copyright Infringement"
+  )
+
   def content_category(s) do
     s
   end
 
   # 5.2 Banner Ad Types
-  constant :bannertype, [
+  constant(:bannertype, [
     :xhtml_text_ad,
     :html_banner_ad,
-    :avascript_ad,
-    :frame,
-  ]
+    :javascript_ad,
+    :iframe
+  ])
 
   # 5.3 Creative Attributes
-  constant :attr, [
+  constant(:attr, [
     :audio_ad_auto_play,
     :audio_ad_user_initiated,
     :expandable_automatic,
@@ -467,47 +586,52 @@ defmodule ExOpenRTB.Constants do
     :windows_dialog_or_alert_style,
     :has_audio_on_off_button,
     :ad_provides_skip_button,
-    :adobe_flash,
-  ]
+    :adobe_flash
+  ])
 
   # 5.4 Ad Position
-  constant :pos, [
-    :unknown,
-    :above_fold,
-    :deprecated,
-    :below_fold,
-    :header,
-    :footer,
-    :sidebar,
-    :full_screen,
-  ], 0
+  constant(
+    :pos,
+    [
+      :unknown,
+      :above_fold,
+      :deprecated,
+      :below_fold,
+      :header,
+      :footer,
+      :sidebar,
+      :full_screen
+    ],
+    0
+  )
 
   # 5.5 Epandable Direction
-  constant :expdir, [
+  constant(:expdir, [
     :exp_dir_left,
     :exp_dir_right,
     :exp_dir_up,
     :exp_dir_down,
-    :exp_dir_full_screen,
-  ]
+    :exp_dir_full_screen
+  ])
 
   # 5.6 API Frameworks
-  constant :api, [
+  constant(:api, [
     :vpaid_1,
     :vpaid_2,
     :mraid_1,
     :ormma,
     :mraid_2,
-  ]
+    :mraid_3
+  ])
 
   # 5.7 Video Linearity
-  constant :linearity, [
+  constant(:linearity, [
     :linear,
     :non_linear
-  ]
+  ])
 
   # 5.8 Protocols
-  constant :protocol, [
+  constant(:protocol, [
     :vast_1,
     :vast_2,
     :vast_3,
@@ -517,27 +641,36 @@ defmodule ExOpenRTB.Constants do
     :vast_4,
     :vast_4_wrapper,
     :daast_1,
-    :daast_1_wrapper,
-  ]
+    :daast_1_wrapper
+  ])
 
   # 5.9 Video Placement Types
-  constant :placement, [
+  constant(:placement, [
     :in_stream,
     :in_banner,
     :in_article,
     :in_feed,
-    :interstitial,
-  ]
+    :interstitial
+  ])
 
-  # 5.9 Playback Methods
-  constant :playbackmethod, [
+  # 5.10 Playback Methods
+  constant(:playbackmethod, [
     :auto_play_sound_on,
     :auto_play_sound_off,
     :click_to_play,
     :mouseVover,
-  ]
+    :viewport_sound_on,
+    :viewport_sound_off
+  ])
 
-  # 5.10 Start Delay
+  # 5.11 Playback Cessation Modes
+  constant(:playbackend, [
+    :on_video_completion_or_terminated_by_user,
+    :on_leaving_viewport_or_terminated_by_user,
+    :on_leaving_floating_viewport_or_terminated_by_user
+  ])
+
+  # 5.12 Start Delay
   # Mid-Roll (value indicates start delay in second): >0
   # Pre-Roll: 0
   # Generic Mid-Roll: -1
@@ -546,94 +679,128 @@ defmodule ExOpenRTB.Constants do
     i
   end
 
-  # 5.11 Production Quality
-  constant :prodq, [
-    :unknown,
-    :professional,
-    :prosumer,
-    :user_generated,
-  ], 0
+  # 5.13 Production Quality
+  constant(
+    :prodq,
+    [
+      :unknown,
+      :professional,
+      :prosumer,
+      :user_generated
+    ],
+    0
+  )
 
-  # 5.12 Companion Types
-  constant :companiontype, [
+  # 5.14 Companion Types
+  constant(:companiontype, [
     :static_resource,
     :html_resource,
-    :iframe_resource,
-  ]
+    :iframe_resource
+  ])
 
-  # 5.13 Content Delivery Methods
-  constant :delivery, [
-    :iab,
+  # 5.15 Content Delivery Methods
+  constant(:delivery, [
+    :streamin,
     :progressive,
-    :download,
-  ]
+    :download
+  ])
 
-  # 5.14 Feed Types
-  constant :feed, [
+  # 5.16 Feed Types
+  constant(:feed, [
     :music_service,
     :fm_am_broadcast,
-    :podcast,
-  ]
+    :podcast
+  ])
 
-  # 5.15 Volume Normalization Modes
-  constant :nvol, [
-    :none,
-    :average_normalized,
-    :peak_normalized,
-    :loudness_normalized,
-    :custom,
-  ], 0
+  # 5.17 Volume Normalization Modes
+  constant(
+    :nvol,
+    [
+      :none,
+      :average_normalized,
+      :peak_normalized,
+      :loudness_normalized,
+      :custom
+    ],
+    0
+  )
 
-  # 5.16 Content Context
-  constant :context, [
+  # 5.18 Content Context
+  constant(:context, [
     :video,
     :game,
     :music,
     :application,
     :text,
     :other,
-    :unknown,
-  ]
+    :unknown
+  ])
 
-  # 5.17 IGQ Media Ratings
-  #1All Audiences2Everyone Over 123Mature Audiences
+  # 5.19 IGQ Media Ratings
+  constant(:igqmediaratings, [
+    :all_audiences,
+    :everyone_over_12,
+    :mature_audiences
+  ])
+
   #
   # 5.20 Location Type
-  #1
-  constant :locationtype, [
+  # 1
+  constant(:locationtype, [
     :gps,
     :ip,
     :user
-  ]
+  ])
+
   #
-  # 5.19 Device Type
-  constant :devicetype, [
+  # 5.21 Device Type
+  constant(:devicetype, [
     :mobile,
     :pc,
     :tv,
     :phone,
     :tablet,
     :connected_device,
-    :set_top_box,
-  ]
+    :set_top_box
+  ])
+
   # 5.22 Connection Type
-  constant :connectiontype, [
-    :unknown,
-    :ethernet,
-    :wifi,
-    :cellular,
-    :cellular_2g,
-    :cellular_3g,
-    :cellular_4g,
-  ], 0
+  constant(
+    :connectiontype,
+    [
+      :unknown,
+      :ethernet,
+      :wifi,
+      :cellular,
+      :cellular_2g,
+      :cellular_3g,
+      :cellular_4g
+    ],
+    0
+  )
+
   # 5.23 IP Location Services
-  #1
-  constant :ipservice, [
+  constant(:ipservice, [
     :ip2location,
     :neustar,
     :maxmind,
-    :netaquity,
-  ]
-  # 5.22 No-Bid Reason Codes
-  #0Unknown Error1Technical Error2Invalid Request3Known Web Spider4Suspected Non-Human Traffic5Cloud, Data center, or Proxy IP6Unsupported Device7Blocked Publisher or Site8Unmatched User
+    :netacuity
+  ])
+
+  # 5.24 No-Bid Reason Codes
+  constant(
+    :nobidreasoncode,
+    [
+      :unknown_error,
+      :technical_error,
+      :invalid_request,
+      :known_web_spider,
+      :suspected_non_human_traffic,
+      :cloud_data_center_or_proxy_ip,
+      :unsupported_device,
+      :blocked_publisher_or_site,
+      :unmatched_user
+    ],
+    0
+  )
 end

@@ -3,6 +3,6 @@ defmodule ExOpenRTB.Metric do
     :type,
     :value,
     :vendor,
-    :ext,
+    :ext
   ]
 end

@@ -6,14 +6,18 @@ defmodule ExOpenRTB.Decoder.Macro do
   end
 
   defmacro defdecode(modules) do
-    modules |> Enum.map(fn module ->
+    modules
+    |> Enum.map(fn module ->
       # Le Haxx
       # Turn module atom into string, lowercase it, turn back into atom
       {_, _, [module_atom]} = module
-      atom = module_atom
-             |> Atom.to_string()
-             |> String.downcase()
-             |> String.to_atom()
+
+      atom =
+        module_atom
+        |> Atom.to_string()
+        |> String.downcase()
+        |> String.to_atom()
+
       quote do
         def decode!(unquote(atom), raw) do
           Poison.decode!(raw, as: %ExOpenRTB.unquote(module){})
@@ -26,7 +30,9 @@ end
 defmodule ExOpenRTB.Decoder do
   use ExOpenRTB.Decoder.Macro
 
-  ExOpenRTB.Decoder.Macro.defdecode [
+  ExOpenRTB.Decoder.Macro.defdecode([
+    BidRequest,
+    BidResponse,
     Source,
     Regs,
     Imp,
@@ -49,6 +55,6 @@ defmodule ExOpenRTB.Decoder do
     Data,
     Segment,
     Bid,
-    SeatBid,
-  ]
+    SeatBid
+  ])
 end

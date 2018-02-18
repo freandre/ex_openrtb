@@ -5,7 +5,7 @@ defmodule ExOpenRTB.Data do
     :id,
     :name,
     :segment,
-    :ext,
+    :ext
   ]
 
   defimpl Poison.Decoder do

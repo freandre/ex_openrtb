@@ -2,7 +2,14 @@ defmodule ExOpenRTB.Regs do
   import ExOpenRTB.Decoder.Helper
 
   defstruct [
-    :coppa,  # TODO 0/1 validation Justus 2017-02-06
-    :ext,
+    :coppa,
+    :ext
   ]
+
+  defimpl Poison.Decoder do
+    def decode(values, _options) do
+      values
+      |> map_const(:yesno, &ExOpenRTB.Constants.yesno/1)
+    end
+  end
 end

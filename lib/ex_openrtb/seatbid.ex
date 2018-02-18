@@ -1,4 +1,6 @@
 defmodule ExOpenRTB.SeatBid do
+  import ExOpenRTB.Decoder.Helper
+
   defstruct [
     :bid,
     :seat,
@@ -7,13 +9,11 @@ defmodule ExOpenRTB.SeatBid do
   ]
 
   defimpl Poison.Decoder do
-    def decode(%{bid: bid} = struct, _options) do
-      bid = if bid do
-        Poison.Decode.decode(bid, as: [%ExOpenRTB.Bid{}])
-      else
-        nil
-      end
-      %{ struct | bid: bid}
+    def decode(values, _options) do
+      values
+      |> map_default(:group, 0)
+      |> map_const(:group, &ExOpenRTB.Constants.group/1)
+      |> map_decoder(:bid, [%ExOpenRTB.Bid{}])
     end
   end
 end

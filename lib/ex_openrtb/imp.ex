@@ -19,21 +19,24 @@ defmodule ExOpenRTB.Imp do
     :secure,
     :iframebuster,
     :exp,
-    :ext,
+    :ext
   ]
 
   defimpl Poison.Decoder do
     def decode(values, _options) do
       values
+      |> map_default(:instl, 0)
+      |> map_default(:bidfloor, 0)
+      |> map_default(:bidfloorcur, "USD")
+      |> map_const(:instl, &ExOpenRTB.Constants.instl/1)
+      |> map_const(:clickbrowser, &ExOpenRTB.Constants.clickbrowser/1)
+      |> map_const(:secure, &ExOpenRTB.Constants.secure/1)
       |> map_decoder(:metric, [%ExOpenRTB.Metric{}])
       |> map_decoder(:banner, %ExOpenRTB.Banner{})
       |> map_decoder(:video, %ExOpenRTB.Video{})
       |> map_decoder(:audio, %ExOpenRTB.Audio{})
       |> map_decoder(:native, %ExOpenRTB.Native{})
       |> map_decoder(:pmp, %ExOpenRTB.Pmp{})
-      |> map_const_list(:protocols, &ExOpenRTB.Constants.protocol/1)
-      |> map_const_list(:battr, &ExOpenRTB.Constants.attr/1)
-      |> map_const_list(:companiontype, &ExOpenRTB.Constants.companiontype/1)
     end
   end
 end

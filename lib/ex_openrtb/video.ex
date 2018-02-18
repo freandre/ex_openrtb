@@ -28,27 +28,30 @@ defmodule ExOpenRTB.Video do
     :companionad,
     :api,
     :companiontype,
-    :ext,
+    :ext
   ]
 
   defimpl Poison.Decoder do
     def decode(values, _options) do
       values
-      |> map_const_list(:protocols, &ExOpenRTB.Constants.protocol/1)
+      |> map_default(:skipmin, 0)
+      |> map_default(:skipafter, 0)
+      |> map_default(:boxingallowed, 1)
       |> map_const(:protocol, &ExOpenRTB.Constants.protocol/1)
       |> map_const(:startdelay, &ExOpenRTB.Constants.startdelay/1)
       |> map_const(:placement, &ExOpenRTB.Constants.placement/1)
       |> map_const(:linearity, &ExOpenRTB.Constants.linearity/1)
-      |> map_default(:skipmin, 0)
-      |> map_default(:skipafter, 0)
+      |> map_const(:skip, &ExOpenRTB.Constants.yesno/1)
+      |> map_const(:boxingallowed, &ExOpenRTB.Constants.yesno/1)
+      |> map_const(:playbackend, &ExOpenRTB.Constants.playbackend/1)
+      |> map_const(:pos, &ExOpenRTB.Constants.pos/1)
+      |> map_const_list(:protocols, &ExOpenRTB.Constants.protocol/1)
       |> map_const_list(:battr, &ExOpenRTB.Constants.attr/1)
-      |> map_bool(:boxingallowed)
       |> map_const_list(:playbackmethod, &ExOpenRTB.Constants.playbackmethod/1)
       |> map_const_list(:delivery, &ExOpenRTB.Constants.delivery/1)
-      |> map_const(:pos, &ExOpenRTB.Constants.pos/1)
-      |> map_decoder(:companionad, [%ExOpenRTB.Banner{}])
       |> map_const_list(:api, &ExOpenRTB.Constants.api/1)
       |> map_const_list(:companiontype, &ExOpenRTB.Constants.companiontype/1)
+      |> map_decoder(:companionad, [%ExOpenRTB.Banner{}])
     end
   end
 end

@@ -2,10 +2,10 @@ defmodule ExOpenRTB.Source do
   import ExOpenRTB.Decoder.Helper
 
   defstruct [
-    :fd,  # TODO 0/1 validation Justus 2017-02-06
+    :fd,
     :tid,
-    :pchain,  # TODO validation Justus 2017-02-06
-    :ext,
+    :pchain,
+    :ext
   ]
 
   defimpl Poison.Decoder do

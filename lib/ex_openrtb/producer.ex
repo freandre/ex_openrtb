@@ -6,7 +6,7 @@ defmodule ExOpenRTB.Producer do
     :name,
     :cat,
     :domain,
-    :ext,
+    :ext
   ]
 
   defimpl Poison.Decoder do

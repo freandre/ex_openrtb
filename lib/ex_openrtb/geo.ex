@@ -16,7 +16,7 @@ defmodule ExOpenRTB.Geo do
     :city,
     :zip,
     :utcoffset,
-    :ext,
+    :ext
   ]
 
   defimpl Poison.Decoder do

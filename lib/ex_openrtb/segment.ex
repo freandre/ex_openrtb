@@ -3,6 +3,6 @@ defmodule ExOpenRTB.Segment do
     :id,
     :name,
     :value,
-    :ext,
+    :ext
   ]
 end

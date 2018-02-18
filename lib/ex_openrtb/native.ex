@@ -6,7 +6,7 @@ defmodule ExOpenRTB.Native do
     :ver,
     :api,
     :battr,
-    :ext,
+    :ext
   ]
 
   defimpl Poison.Decoder do

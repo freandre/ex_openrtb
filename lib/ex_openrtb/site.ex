@@ -16,12 +16,14 @@ defmodule ExOpenRTB.Site do
     :publisher,
     :content,
     :keywords,
-    :ext,
+    :ext
   ]
 
   defimpl Poison.Decoder do
     def decode(values, _options) do
       values
+      |> map_const(:mobile, &ExOpenRTB.Constants.yesno/1)
+      |> map_const(:privacypolicy, &ExOpenRTB.Constants.yesno/1)
       |> map_const_list(:cat, &ExOpenRTB.Constants.content_category/1)
       |> map_const_list(:sectioncat, &ExOpenRTB.Constants.content_category/1)
       |> map_const_list(:pagecat, &ExOpenRTB.Constants.content_category/1)

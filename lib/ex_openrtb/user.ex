@@ -10,7 +10,7 @@ defmodule ExOpenRTB.User do
     :customdata,
     :geo,
     :data,
-    :ext,
+    :ext
   ]
 
   defimpl Poison.Decoder do

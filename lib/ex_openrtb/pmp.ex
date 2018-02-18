@@ -4,12 +4,13 @@ defmodule ExOpenRTB.Pmp do
   defstruct [
     :private_auction,
     :deals,
-    :ext,
+    :ext
   ]
 
   defimpl Poison.Decoder do
     def decode(values, _options) do
       values
+      |> map_default(:private_auction, 0)
       |> map_decoder(:deals, [%ExOpenRTB.Deal{}])
     end
   end

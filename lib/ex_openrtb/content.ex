@@ -27,13 +27,22 @@ defmodule ExOpenRTB.Content do
     :language,
     :embeddable,
     :data,
-    :ext,
+    :ext
   ]
 
   defimpl Poison.Decoder do
     def decode(values, _options) do
       values
+      |> map_const(:prodq, &ExOpenRTB.Constants.prodq/1)
+      |> map_const(:videoquality, &ExOpenRTB.Constants.prodq/1)
+      |> map_const(:context, &ExOpenRTB.Constants.context/1)
+      |> map_const(:qagmediarating, &ExOpenRTB.Constants.igqmediaratings/1)
+      |> map_const(:livestream, &ExOpenRTB.Constants.livestream/1)
+      |> map_const(:sourcerelationship, &ExOpenRTB.Constants.sourcerelationship/1)
+      |> map_const(:embeddable, &ExOpenRTB.Constants.yesno/1)
+      |> map_const_list(:cat, &ExOpenRTB.Constants.content_category/1)
       |> map_decoder(:producer, %ExOpenRTB.Producer{})
+      |> map_decoder(:data, [%ExOpenRTB.Data{}])
     end
   end
 end
