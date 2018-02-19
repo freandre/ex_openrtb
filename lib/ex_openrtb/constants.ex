@@ -1,36 +1,54 @@
 defmodule ExOpenRTB.Constants.Macro do
   defmacro constant(name, keywords, at \\ 1) do
-    Enum.with_index(keywords, at)
-    |> Enum.map(fn {kw, int} ->
+    init = [
       quote do
-        def unquote(name)(unquote(int)) do
-          unquote(kw)
-        end
-
         def unquote(name)(nil) do
         end
-
-        def unquote(name)(unquote(kw)) do
-          unquote(int)
-        end
       end
+    ]
+
+    Enum.with_index(keywords, at)
+    |> Enum.reduce(init, fn {kw, int}, acc ->
+      [
+        quote do
+          def unquote(name)(unquote(int)) do
+            unquote(kw)
+          end
+
+          def unquote(name)(unquote(kw)) do
+            unquote(int)
+          end
+        end
+        | acc
+      ]
     end)
   end
 
   defmacro abbreviation(name, keywords) do
-    keywords
-    |> Enum.map(fn {k, v} ->
-      k = Atom.to_string(k)
-
+    init = [
       quote do
-        def unquote(name)(unquote(k)) do
-          unquote(v)
-        end
-
-        def unquote(name)(unquote(v)) do
-          unquote(k)
+        def unquote(name)(value) do
+          value
         end
       end
+    ]
+
+    keywords
+    |> Enum.reduce(init, fn {k, v}, acc ->
+      k = Atom.to_string(k)
+
+      [
+        quote do
+          def unquote(name)(unquote(k)) do
+            unquote(v)
+          end
+
+          def unquote(name)(unquote(v)) do
+            unquote(k)
+          end
+        end
+        | acc
+      ]
     end)
   end
 end
@@ -550,15 +568,12 @@ defmodule ExOpenRTB.Constants do
     "IAB25-6": "Under Construction",
     "IAB25-7": "Incentivized",
     IAB26: "Illegal Content",
+    # WARNING due to macro expansion (Illegal content defined twice)
     "IAB26-1": "Illegal Content",
     "IAB26-2": "Warez",
     "IAB26-3": "Spyware/Malware",
     "IAB26-4": "Copyright Infringement"
   )
-
-  def content_category(s) do
-    s
-  end
 
   # 5.2 Banner Ad Types
   constant(:bannertype, [
