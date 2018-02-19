@@ -32,7 +32,7 @@ defmodule ExOpenRTB.Banner do
       |> map_const_list(:btype, &ExOpenRTB.Constants.bannertype/1)
       |> map_const_list(:battr, &ExOpenRTB.Constants.attr/1)
       |> map_const_list(:expdir, &ExOpenRTB.Constants.expdir/1)
-      |> map_const_list(:expdir, &ExOpenRTB.Constants.api/1)
+      |> map_const_list(:api, &ExOpenRTB.Constants.api/1)
     end
   end
 end

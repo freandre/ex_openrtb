@@ -41,11 +41,7 @@
       "name": "Publisher A"
     },
     "content": {
-      "keyword": [
-        "keyword1",
-        "keyword2",
-        "keyword3"
-      ]
+      "keywords": "keyword1,keyword2,keyword3"
     }
   },
   "device": {

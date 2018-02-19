@@ -7,9 +7,9 @@ defmodule ExOpenRTB.BannerTest do
       w: 728,
       h: 90,
       pos: :above_fold,
-      btype: [4],
+      btype: [:iframe],
       battr: [:windows_dialog_or_alert_style],
-      api: [3]
+      api: [:mraid_1]
     },
     :banner
   )

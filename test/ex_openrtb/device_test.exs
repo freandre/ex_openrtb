@@ -4,7 +4,7 @@ defmodule ExOpenRTB.DeviceTest do
 
   test_decode(
     %ExOpenRTB.Device{
-      dnt: false,
+      dnt: :tracking_unrestricted,
       ua:
         "Mozilla/5.0 (iPhone; CPU iPhone OS 6_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3",
       ip: "123.145.167.189",

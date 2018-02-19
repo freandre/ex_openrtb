@@ -6,7 +6,7 @@ defmodule ExOpenRTB.DealTest do
     %ExOpenRTB.Deal{
       id: "DX-1985-010A",
       bidfloor: 2.5,
-      at: 2
+      at: :second_price
     },
     :deal
   )
